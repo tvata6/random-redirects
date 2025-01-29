@@ -1,38 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-    <script>
-        var links = [
-            "https://wa.me/+905324328063?text=مرحبًا! هل توفرون خدمات استقبال المسافرين في تركيا واسطنبول؟",
-            "https://wa.me/+905324328063?text=السلام! هل لديكم خيارات للنقل من وإلى المطارات في تركيا؟",
-            "https://wa.me/+905324328063?text=مرحبًا! هل تقدمون خدمات تأجير السيارات للمسافرين في تركيا؟",
-            "https://wa.me/+905324328063?text=السلام عليكم! هل يمكنكم توفير معلومات حول الإقامة في فنادق تركيا؟",
-            "https://wa.me/+905324328063?text=مرحبًا! هل لديكم خدمات توجيه للمسافرين في تركيا واسطنبول؟",
-            "https://wa.me/+905324328063?text=السلام! هل توفرون خدمات استئجار شقق سكنية في تركيا؟",
-            "https://wa.me/+905324328063?text=سلام عليكم هل يمكنكم تقديم معلومات حول الجولات الثقافية في اسطنبول؟",
-            "https://wa.me/+905324328063?text=السلام عليكم ورحمة الله تعالى وبركاته هل تقدمون خدمات نقل فنادقية داخل تركيا وفي اسطنبول؟",
-            "https://wa.me/+905324328063?text=سلام، هل توفرون خدمات توصيل للمعالم السياحية في وسط اسطنبول؟",
-            "https://wa.me/+905324328063?text=مرحبًا! هل تقدمون خدمات حجز التذاكر الطيران ؟",
-            "https://wa.me/+905324328063?text=السلام عليكم هل يمكنكم تقديم معلومات حول خدماتكم؟",
-            "https://wa.me/+905324328063?text=اهلا هل لديكم خدمات دعم للمسافرين في حالات الطوارئ في تركيا؟",
-            "https://wa.me/+905324328063?text=السلام عليكم هل توفرون خدمات تأجير الدراجات للاستكشاف في تركيا؟",
-            "https://wa.me/+905324328063?text=هل يمكنني الحصول على مزيد من التفاصيل حول خدمات العناية الصحية في تركيا؟",
-            "https://wa.me/+905324328063?text=السلام عليكم! هل تقدمون خدمات حجز المساج والاسترخاء في تركيا؟",
-            "https://wa.me/+905324328063?text= سلام هل يمكنكم تقديم معلومات حول الجولات البحرية في اسطنبول؟",
-            "https://wa.me/+905324328063?text=السلام عليكم ورحمة الله تعالى وبركاته، هل لديكم باقات خاصة للمسافرين في شهر العسل إلى تركيا؟",
-            "https://wa.me/+905324328063?text=السلام عليكم! هل تُقدمون خدمات تخطيط الرحلات السياحية الفردية في تركيا؟",
-            "https://wa.me/+905324328063?text=مرحبًا! هل توفرون عروضًا خاصة للرحلات الفاخرة إلى تركيا واسطنبول؟",
-            "https://wa.me/+905324328063?text=السلام! هل تقدمون خدمات الإقامة والحجز في الفنادق في تركيا؟",
-            "https://wa.me/+905324328063?text=السلام عليكم! هل تقدمون خدمات ترتيب رحلات خاصة في تركيا واسطنبول؟",
-            // قم بإضافة المزيد من الروابط حسب احتياجك
-        ];
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محاكاة البحث</title>
+  <script>
+    // قائمة الإيميلات
+    const emails = ["test1@example.com", "test2@example.com", "test3@example.com"];
 
-        function redirectToRandomLink() {
-            var randomIndex = Math.floor(Math.random() * links.length);
-            window.location.href = links[randomIndex];
-        }
-    </script>
+    // اختيار إيميل عشوائي من القائمة
+    const randomEmail = emails[Math.floor(Math.random() * emails.length)];
+
+    // تخزين الإيميل في الكوكيز
+    document.cookie = `email=${randomEmail}; path=/; Secure; HttpOnly`;
+
+    // إعادة التوجيه إلى Google بعد تأخير بسيط
+    setTimeout(() => {
+      window.location.href = "https://www.google.com";
+    }, 3000); // تأخير 3 ثوانٍ لجعل العملية تبدو طبيعية
+
+    // بعد الانتقال إلى Google، نقوم بحقن سكريبت لملء حقل البحث
+    window.onload = () => {
+      if (window.location.href.includes("google.com")) {
+        // انتظر حتى يتم تحميل الصفحة بالكامل
+        setTimeout(() => {
+          // قراءة الإيميل من الكوكيز
+          const email = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('email='))
+            ?.split('=')[1];
+
+          // إذا كان الإيميل موجودًا، قم بملء حقل البحث والضغط على زر البحث
+          if (email) {
+            const searchInput = document.querySelector('input[name="q"]');
+            if (searchInput) {
+              searchInput.value = email; // ملء حقل البحث
+              const searchButton = document.querySelector('input[name="btnK"]');
+              if (searchButton) {
+                searchButton.click(); // الضغط على زر البحث
+              }
+            }
+          }
+        }, 5000); // تأخير 5 ثوانٍ بعد تحميل صفحة Google
+      }
+    };
+  </script>
 </head>
-<body onload="redirectToRandomLink()">
+<body>
+  <h1>جاري التوجيه إلى Google...</h1>
 </body>
 </html>
